@@ -1,0 +1,59 @@
+@use '@angular/material' as mat;
+
+@include mat.core();
+
+$dnd-primary: mat.m2-define-palette(mat.$m2-indigo-palette);
+$dnd-accent: mat.m2-define-palette(mat.$m2-amber-palette);
+$dnd-warn: mat.m2-define-palette(mat.$m2-red-palette);
+
+$dnd-theme: mat.m2-define-light-theme((
+  color: (
+    primary: $dnd-primary,
+    accent: $dnd-accent,
+    warn: $dnd-warn,
+  ),
+  typography: mat.m2-define-typography-config(),
+));
+
+@include mat.all-component-themes($dnd-theme);
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.mat-mdc-card {
+  margin-bottom: 16px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.section-title {
+  margin: 24px 0 16px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #3f51b5;
+  border-bottom: 2px solid #3f51b5;
+  padding-bottom: 4px;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 768px) {
+  .grid-2, .grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
