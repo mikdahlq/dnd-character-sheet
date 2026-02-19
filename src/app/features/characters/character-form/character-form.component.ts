@@ -490,13 +490,18 @@ export class CharacterFormComponent implements OnInit {
   }
 
   async save(): Promise<void> {
-    if (this.isEditing && this.character.id) {
-      await this.characterService.updateCharacter(this.character.id, this.character);
-      this.snackBar.open('Karaktären har sparats', 'OK', { duration: 3000 });
-    } else {
-      const id = await this.characterService.createCharacter(this.character);
-      this.snackBar.open('Karaktären har skapats', 'OK', { duration: 3000 });
-      this.router.navigate(['/characters', id, 'edit']);
+    try {
+      if (this.isEditing && this.character.id) {
+        await this.characterService.updateCharacter(this.character.id, this.character);
+        this.snackBar.open('Karaktären har sparats', 'OK', { duration: 3000 });
+      } else {
+        const id = await this.characterService.createCharacter(this.character);
+        this.snackBar.open('Karaktären har skapats', 'OK', { duration: 3000 });
+        this.router.navigate(['/characters', id, 'edit']);
+      }
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Ett okänt fel uppstod';
+      this.snackBar.open(`Kunde inte spara: ${message}`, 'OK', { duration: 5000 });
     }
   }
 

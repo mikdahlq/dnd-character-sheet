@@ -11,9 +11,7 @@ export class CharacterService {
   private firestore = inject(Firestore);
   private auth = inject(Auth);
 
-  private get charactersCollection() {
-    return collection(this.firestore, 'characters');
-  }
+  private charactersCollection = collection(this.firestore, 'characters');
 
   async getMyCharacters(): Promise<Character[]> {
     const uid = this.auth.currentUser?.uid;

@@ -12,9 +12,7 @@ export class SessionService {
   private firestore = inject(Firestore);
   private auth = inject(Auth);
 
-  private get sessionsCollection() {
-    return collection(this.firestore, 'sessions');
-  }
+  private sessionsCollection = collection(this.firestore, 'sessions');
 
   async getMySessions(): Promise<GameSession[]> {
     const uid = this.auth.currentUser?.uid;
