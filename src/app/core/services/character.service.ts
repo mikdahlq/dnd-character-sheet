@@ -1,9 +1,10 @@
 import { Injectable, inject } from '@angular/core';
-import {
-  Firestore, collection, doc, addDoc, updateDoc, deleteDoc,
-  getDocs, getDoc, query, where, orderBy,
-} from '@angular/fire/firestore';
+import { Firestore } from '@angular/fire/firestore';
 import { Auth } from '@angular/fire/auth';
+import {
+  collection, doc, addDoc, updateDoc, deleteDoc,
+  getDocs, getDoc, query, where, orderBy,
+} from 'firebase/firestore';
 import { Character, createDefaultCharacter } from '../../shared/models/character.model';
 
 @Injectable({ providedIn: 'root' })

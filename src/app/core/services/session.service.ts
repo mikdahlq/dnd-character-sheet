@@ -1,9 +1,10 @@
 import { Injectable, inject } from '@angular/core';
-import {
-  Firestore, collection, doc, addDoc, updateDoc,
-  getDocs, getDoc, query, where, orderBy, arrayUnion,
-} from '@angular/fire/firestore';
+import { Firestore } from '@angular/fire/firestore';
 import { Auth } from '@angular/fire/auth';
+import {
+  collection, doc, addDoc, updateDoc,
+  getDocs, getDoc, query, where, orderBy, arrayUnion,
+} from 'firebase/firestore';
 import { GameSession, SessionPlayer, generateInviteCode } from '../../shared/models/session.model';
 import { Character } from '../../shared/models/character.model';
 

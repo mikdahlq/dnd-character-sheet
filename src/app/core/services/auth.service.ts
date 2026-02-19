@@ -1,6 +1,8 @@
 import { Injectable, inject } from '@angular/core';
-import { Auth, signInWithPopup, GoogleAuthProvider, signOut, user, User } from '@angular/fire/auth';
-import { Firestore, doc, setDoc, getDoc } from '@angular/fire/firestore';
+import { Auth, user, User } from '@angular/fire/auth';
+import { signInWithPopup, GoogleAuthProvider, signOut } from 'firebase/auth';
+import { Firestore } from '@angular/fire/firestore';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { Router } from '@angular/router';
 import { Observable, map } from 'rxjs';
 import { AppUser } from '../../shared/models/user.model';
