@@ -13,6 +13,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CharacterService } from '../../../core/services/character.service';
 import { Character, Attributes, Equipment, Spell, Skill, createDefaultCharacter } from '../../../shared/models/character.model';
 import { SkillService } from '../../../rules/skill.service';
@@ -25,7 +26,7 @@ import { AttributeService } from '../../../rules/attribute.service';
     CommonModule, FormsModule, RouterModule, MatCardModule,
     MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule,
     MatIconModule, MatTabsModule, MatCheckboxModule, MatSnackBarModule,
-    MatChipsModule, MatExpansionModule,
+    MatChipsModule, MatExpansionModule, MatProgressSpinnerModule,
   ],
   template: `
     <div class="page-header">
@@ -34,8 +35,12 @@ import { AttributeService } from '../../../rules/attribute.service';
         <button mat-button routerLink="/characters">
           <mat-icon>arrow_back</mat-icon> Tillbaka
         </button>
-        <button mat-raised-button color="primary" (click)="save()">
-          <mat-icon>save</mat-icon> Spara
+        <button mat-raised-button color="primary" (click)="save()" [disabled]="isSaving">
+          @if (isSaving) {
+            <mat-spinner diameter="20"></mat-spinner> Sparar...
+          } @else {
+            <mat-icon>save</mat-icon> Spara
+          }
         </button>
       </div>
     </div>
@@ -443,6 +448,7 @@ import { AttributeService } from '../../../rules/attribute.service';
     .small-field { width: 80px; }
     .equipped-icon { color: #4caf50; font-size: 18px; margin-left: 8px; }
     .panel-actions { text-align: right; padding-top: 8px; }
+    button mat-spinner { display: inline-block; margin-right: 6px; vertical-align: middle; }
   `]
 })
 export class CharacterFormComponent implements OnInit {
@@ -455,6 +461,7 @@ export class CharacterFormComponent implements OnInit {
 
   character: Character = createDefaultCharacter('');
   isEditing = false;
+  isSaving = false;
 
   attributeKeys: (keyof Attributes)[] = [
     'strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma'
@@ -490,6 +497,7 @@ export class CharacterFormComponent implements OnInit {
   }
 
   async save(): Promise<void> {
+    this.isSaving = true;
     try {
       if (this.isEditing && this.character.id) {
         await this.characterService.updateCharacter(this.character.id, this.character);
@@ -502,6 +510,8 @@ export class CharacterFormComponent implements OnInit {
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Ett okänt fel uppstod';
       this.snackBar.open(`Kunde inte spara: ${message}`, 'OK', { duration: 5000 });
+    } finally {
+      this.isSaving = false;
     }
   }
 
